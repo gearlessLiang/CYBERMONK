@@ -88,15 +88,15 @@ public partial class main : Node2D
 
 
 	public void register_dragged_monk(monk_little monk)
-    {
+	{
 		GD.Print("registered");
 		
 		monk.isDragging = true;
 		registered_monk = monk;
-    }
+	}
 	
 	public void release_dragged_monk()
-    {
+	{
 		GD.Print("unregistered");
 		monk_little_place_pos = registered_monk.GlobalPosition;
 		
@@ -107,7 +107,7 @@ public partial class main : Node2D
 
 		registered_monk = null;
 		monk_little_place_pos = null;
-    }
+	}
 
 	public void place_dragged_monk(Vector2 monk_pos)
 	{
@@ -115,9 +115,9 @@ public partial class main : Node2D
 		foreach (Node2D child in building_system.GetChildren())
 		{
 			if (child is Node2D building)
-        	{
-            building_pool.Add(building);
-        	}
+			{
+			building_pool.Add(building);
+			}
 		}
 
 		var building_distance_pool = new List<float>();

@@ -1,0 +1,18 @@
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\bin\Debug\Cyber Monk.deps.json
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\bin\Debug\Cyber Monk.runtimeconfig.json
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\bin\Debug\Cyber Monk.dll
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\bin\Debug\Cyber Monk.pdb
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\bin\Debug\GodotSharp.dll
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\obj\Debug\Cyber Monk.csproj.AssemblyReference.cache
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\obj\Debug\Cyber Monk.GeneratedMSBuildEditorConfig.editorconfig
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\obj\Debug\Cyber Monk.AssemblyInfoInputs.cache
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\obj\Debug\Cyber Monk.AssemblyInfo.cs
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\obj\Debug\Cyber Monk.csproj.CoreCompileInputs.cache
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\obj\Debug\Cyber Monk.sourcelink.json
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\obj\Debug\Cyber Monk.csproj.Up2Date
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\obj\Debug\Cyber Monk.dll
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\obj\Debug\refint\Cyber Monk.dll
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\obj\Debug\Cyber Monk.pdb
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\obj\Debug\Cyber Monk.genruntimeconfig.cache
+D:\GamingProject\UI_Game\CYBERMONK\.godot\mono\temp\obj\Debug\ref\Cyber Monk.dll
