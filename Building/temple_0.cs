@@ -11,9 +11,8 @@ public partial class temple_0 : Node2D
 	// public TextureButton unselectButton;
 	public TextureButton temple1Button;
 	public TextureButton temple2Button;
-
+	public TextureButton temple3Button;
 	public Node2D buttons;
-
 
 	public Area2D templeArea;
 
@@ -34,13 +33,14 @@ public partial class temple_0 : Node2D
 		// unselectButton = GetNode<TextureButton>("Buttons/UnselectButton");
 		temple1Button = GetNode<TextureButton>("Buttons/Temple1Button");
 		temple2Button = GetNode<TextureButton>("Buttons/Temple2Button");
-
+		temple3Button = GetNode<TextureButton>("Buttons/Temple3Button");
 
 		templeArea = GetNode<Area2D>("Area2D");
 		templeArea.InputEvent += ClickBuilding;
 
 		temple1Button.Pressed += ClickTemple1;
 		temple2Button.Pressed += ClickTemple2;
+		temple3Button.Pressed += ClickTemple3;
 
 		Initialize();
     }
@@ -81,6 +81,11 @@ public partial class temple_0 : Node2D
 	public void ClickTemple2()
     {
 		EmitSignal(nameof(ChangeBuilding), 2);
+    }
+
+	public void ClickTemple3()
+    {
+		EmitSignal(nameof(ChangeBuilding), 3);
     }
 
 

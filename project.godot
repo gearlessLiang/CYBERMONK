@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Cyber Monk"
 run/main_scene="res://Scene/main.tscn"
-config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
+config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/fullsize=false
 config/icon="res://icon.svg"
 

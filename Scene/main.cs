@@ -1,158 +1,147 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class main : Node2D
 {
-	
-
+    // --- 节点引用 ---
 	private CustomSignals _customSignal;
-	public Label gongdeAccountLabel;
-	public int gongdeBalance = 0;
+    private Label _gongdeLabel;
+    
+    public Node2D BuildingSystem; // 必须是 public
+    public Node2D MonkSystem;     // 必须是 public
 
-	public monk_little monk_1;
-	public Timer monk_1_gongde_timer;
+    // --- 数据变量 ---
+    public int gongdeBalance = 0;
+    public monk_little registered_monk;
 
-	//Drag and drop register monk
-	public monk_little registered_monk;
-	public Vector2? monk_little_place_pos;
-	public Node2D building_system;
+    [Export(PropertyHint.File, "*.csv")]
+    public string appointed_csv_path = "";
 
-	
-	public override void _Ready()
-	{
-		building_system = GetNode<Node2D>("BuildingSystem");
-		monk_1 = GetNode<monk_little>("MonkLittle");
-		monk_1_gongde_timer = GetNode<Timer>("MonkLittle/GongdeTimer");
-		
-		gongdeAccountLabel = GetNode<Label>("/root/Main/CanvasLayer/Label");
-		_customSignal = GetNode<CustomSignals>("/root/CustomSignals");
-		_customSignal.ClickMuyu += gongdeIncrease;
-		_customSignal.MonkLittleUnlock += MonkLittleUnlockConfirm;
+    public override void _Ready()
+    {
+        // 这里的路径要和你场景树的名字完全一致
+        BuildingSystem = GetNode<Node2D>("BuildingSystem");
+        MonkSystem = GetNode<Node2D>("MonkSystem");
+        _gongdeLabel = GetNode<Label>("CanvasLayer/Label"); 
+        
+        // ... 其余逻辑不变 ...
+        _customSignal = GetNode<CustomSignals>("/root/CustomSignals");
+        _customSignal.ClickMuyu += (msg) => AddGongde(1);
+        _customSignal.MonkLittleUnlock += OnMonkUnlocked;
+        _customSignal.MonkRegisteredToDND += (monk) => registered_monk = monk;
+        _customSignal.ReleaseMonkRegisteredToDND += OnReleaseMonk;
 
-		monk_1_gongde_timer.Timeout += AddGongde;
+        LoadAndReadCSV(appointed_csv_path);
+        UpdateUI();
+    }
 
-		//Drag and drop register monk
-		_customSignal.MonkRegisteredToDND += register_dragged_monk;
-		_customSignal.ReleaseMonkRegisteredToDND += release_dragged_monk;
+    // 功德增加核心逻辑
+    public void AddGongde(int amount)
+    {
+        gongdeBalance += amount;
+        UpdateUI();
+        
+        // 每次功德变动，检查所有和尚是否达到解锁条件
+        CheckAllMonksUnlockAllowance();
+    }
 
-	}
+    private void UpdateUI()
+    {
+        if (IsInstanceValid(_gongdeLabel))
+        {
+            _gongdeLabel.Text = gongdeBalance.ToString();
+        }
+    }
 
-	public void AddGongde()
-	{
-		gongdeBalance += 1;
-		gongdeAccountLabel.Text = gongdeBalance.ToString();
-	}
+	private void CheckAllMonksUnlockAllowance()
+    {
+        if (!IsInstanceValid(MonkSystem)) return;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+        foreach (Node child in MonkSystem.GetChildren())
+        {
+            if (child is monk_little monk && IsInstanceValid(monk))
+            {
+                if (!monk.unlockState && gongdeBalance >= 10)
+                {
+                    monk.ShowUnlockButton();
+                }
+            }
+        }
+    }
 
-	public void CheckUnlockAllowence(int currentGongde)
-	{
-		GD.Print("confirm");
-		if (monk_1.unlockState == false && gongdeBalance > 10)
-		{
-			
-			monk_1.ShowUnlockButton();
-			
+    private void OnMonkUnlocked()
+    {
+        gongdeBalance -= 10;
+        UpdateUI();
+        GD.Print("主系统确认：功德扣除，解锁完成。");
+    }
 
-		}
-	}
+    // --- CSV 读取 (优化版) ---
+    public void LoadAndReadCSV(string path)
+    {
+        if (string.IsNullOrEmpty(path) || !FileAccess.FileExists(path))
+        {
+            GD.PrintErr("CSV 路径无效！");
+            return;
+        }
 
-	//receive signal
-	public void MonkLittleUnlockConfirm()
-	{
-		gongdeBalance -= 10;
-		monk_1_gongde_timer.Start();
-		gongdeAccountLabel.Text = gongdeBalance.ToString();
+        using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+        int lineCount = 0;
+        while (!file.EofReached())
+        {
+            string line = file.GetLine();
+            if (lineCount == 2) // 获取第三行 (Index 2)
+            {
+                string[] cols = line.Split(',');
+                if (cols.Length > 1 && int.TryParse(cols[1].Trim(), out int val))
+                {
+                    gongdeBalance = val;
+                }
+            }
+            lineCount++;
+        }
+    }
 
-		GD.Print("confirm");
-	}
+    // --- 拖拽放置逻辑 (重构版) ---
+    private void OnReleaseMonk()
+    {
+        if (!IsInstanceValid(registered_monk)) return;
 
-	public void gongdeIncrease(string MuyuMessage)
-	{
-		GD.Print("ddd");
+        Vector2 dropPos = registered_monk.GlobalPosition;
+        Node2D targetBuilding = FindClosestBuilding(dropPos, 80f);
 
-		gongdeBalance += 1;
-		gongdeAccountLabel.Text = gongdeBalance.ToString();
+        if (targetBuilding != null)
+        {
+            if (targetBuilding.HasMethod("monk_dragged_in"))
+            {
+                targetBuilding.Call("monk_dragged_in", registered_monk);
+                // 这里不需要在这里 Hide，由建筑脚本处理
+            }
+            targetBuilding.Scale *= 1.05f;
+        }
 
-		CheckUnlockAllowence(gongdeBalance);
-	}
+        registered_monk = null;
+    }
 
-	private void _on_button_pressed()
-	{
-		GD.Print("Test printed");
-	}
+    private Node2D FindClosestBuilding(Vector2 pos, float maxDist)
+    {
+        Node2D closest = null;
+        float minDist = maxDist;
 
-
-	public void register_dragged_monk(monk_little monk)
-	{
-		GD.Print("registered");
-		
-		monk.isDragging = true;
-		registered_monk = monk;
-	}
-	
-	public void release_dragged_monk()
-	{
-		GD.Print("unregistered");
-		monk_little_place_pos = registered_monk.GlobalPosition;
-		
-		if(monk_little_place_pos.HasValue)
-		{
-			place_dragged_monk(monk_little_place_pos.Value);
-		}
-
-		registered_monk = null;
-		monk_little_place_pos = null;
-	}
-
-	public void place_dragged_monk(Vector2 monk_pos)
-	{
-		var building_pool = new List<Node2D>();
-		foreach (Node2D child in building_system.GetChildren())
-		{
-			if (child is Node2D building)
-			{
-			building_pool.Add(building);
-			}
-		}
-
-		var building_distance_pool = new List<float>();
-		foreach (Node2D child in building_pool)
-		{
-			GD.Print("building position as follow: ");
-			GD.Print(child.GlobalPosition);
-
-			float distance = monk_pos.DistanceTo(child.GlobalPosition);
-			building_distance_pool.Add(distance);
-			GD.Print(distance);
-		}
-
-		// 计算monk到建筑的距离中最小的值
-		int minIndex = 0;
-		float minValue = building_distance_pool[0];
-
-		for (int i = 1; i < building_distance_pool.Count; i++)
-		{
-			if(building_distance_pool[i] < minValue)
-			{
-				minValue = building_distance_pool[i];
-				minIndex = i;
-			}
-		}
-		GD.Print("最小值是 " + minValue + "，索引是 " + minIndex);
-
-		
-		if (minValue < 50)
-		{
-			registered_monk.Hide();
-			building_pool[minIndex].Scale *= 1.2f;
-		}
-
-
-	}
-
+        foreach (Node child in BuildingSystem.GetChildren())
+        {
+            if (child is Node2D b)
+            {
+                float d = pos.DistanceTo(b.GlobalPosition);
+                if (d < minDist)
+                {
+                    minDist = d;
+                    closest = b;
+                }
+            }
+        }
+        return closest;
+    }
 }

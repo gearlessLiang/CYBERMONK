@@ -1,26 +1,25 @@
-[gd_scene load_steps=9 format=3 uid="uid://cujtpkyf3cu1v"]
+[gd_scene load_steps=8 format=3 uid="uid://cujtpkyf3cu1v"]
 
 [ext_resource type="Script" path="res://Scene/main.cs" id="1_n6jo4"]
+[ext_resource type="Texture2D" uid="uid://bv1istdjvyg1c" path="res://Asset/BG.png" id="2_64hjx"]
 [ext_resource type="PackedScene" uid="uid://de6b8qukjd8l" path="res://Char/monk_little.tscn" id="2_fvxa6"]
 [ext_resource type="PackedScene" uid="uid://bu6vpn605kxfu" path="res://Stuff/muyu.tscn" id="3_g2yag"]
-[ext_resource type="Texture2D" uid="uid://cb7hnw3uol7xu" path="res://Asset/Building/Floor.png" id="4_ww8b8"]
 [ext_resource type="PackedScene" uid="uid://k04qywwexrrq" path="res://Building/building_place.tscn" id="5_k1b4x"]
-[ext_resource type="Texture2D" uid="uid://ccfk5b1i01smn" path="res://Asset/ScaleExample/temple2.png" id="6_kwqy6"]
-[ext_resource type="Texture2D" uid="uid://h2k4qccx661" path="res://Asset/Building/temple2.png" id="7_exh0v"]
+[ext_resource type="PackedScene" uid="uid://dfwik0tbaojb3" path="res://Char/pilgrim.tscn" id="8_xbdv0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f1keh"]
 size = Vector2(1149, 127)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_n6jo4")
+appointed_csv_path = "res://Shared/ConfigTest.csv"
 
 [node name="Floor" type="StaticBody2D" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="Floor"]
+[node name="BG" type="Sprite2D" parent="Floor"]
 texture_repeat = 2
-position = Vector2(567, 787)
-scale = Vector2(9, 9)
-texture = ExtResource("4_ww8b8")
+position = Vector2(593, 394)
+texture = ExtResource("2_64hjx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
 position = Vector2(578.5, 712)
@@ -29,13 +28,14 @@ shape = SubResource("RectangleShape2D_f1keh")
 [node name="BuildingSystem" type="Node2D" parent="."]
 
 [node name="BuildingPlace" parent="BuildingSystem" instance=ExtResource("5_k1b4x")]
-position = Vector2(427, 581)
+position = Vector2(574, 607)
 
 [node name="BuildingPlace2" parent="BuildingSystem" instance=ExtResource("5_k1b4x")]
-position = Vector2(361, 307)
+position = Vector2(433, 476)
 
 [node name="Muyu" parent="." instance=ExtResource("3_g2yag")]
-position = Vector2(543, 407)
+visible = false
+position = Vector2(219, 286)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -48,14 +48,36 @@ grow_vertical = 2
 text = "0"
 metadata/_edit_lock_ = true
 
-[node name="MonkLittle" parent="." instance=ExtResource("2_fvxa6")]
+[node name="Pilgrim" parent="." instance=ExtResource("8_xbdv0")]
+position = Vector2(220, 607)
+
+[node name="PathStone" type="Node2D" parent="."]
+
+[node name="PathStone1" type="Node2D" parent="PathStone"]
+position = Vector2(401, 531)
+
+[node name="PathStone2" type="Node2D" parent="PathStone"]
+position = Vector2(265, 438)
+
+[node name="PathStone3" type="Node2D" parent="PathStone"]
+position = Vector2(230, 533)
+
+[node name="PathStone4" type="Node2D" parent="PathStone"]
+position = Vector2(295, 599)
+
+[node name="PathStoneLeave" type="Node2D" parent="."]
+
+[node name="PathStone1" type="Node2D" parent="PathStoneLeave"]
+position = Vector2(863, 548)
+
+[node name="PathStone2" type="Node2D" parent="PathStoneLeave"]
+position = Vector2(939, 614)
+
+[node name="Muyu2" parent="." instance=ExtResource("3_g2yag")]
+position = Vector2(499, 333)
+
+[node name="MonkSystem" type="Node2D" parent="."]
+
+[node name="MonkLittle" parent="MonkSystem" instance=ExtResource("2_fvxa6")]
 z_index = 10
-position = Vector2(681, 603)
-
-[node name="Temple2" type="Sprite2D" parent="."]
-position = Vector2(554, 426)
-texture = ExtResource("6_kwqy6")
-
-[node name="Temple3" type="Sprite2D" parent="."]
-position = Vector2(574, 590)
-texture = ExtResource("7_exh0v")
+position = Vector2(785, 574)

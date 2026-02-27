@@ -32,7 +32,7 @@ func play_muyu():
 func physics_update(delta: float):
 	if wait_time > 0:
 		wait_time -= delta
-		print(wait_time)
+
 	else:
 		transitioned.emit(self, "monkpatrol")
 

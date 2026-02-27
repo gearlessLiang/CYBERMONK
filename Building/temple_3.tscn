@@ -1,0 +1,104 @@
+[gd_scene load_steps=13 format=3 uid="uid://hepi5eejw4sh"]
+
+[ext_resource type="Script" path="res://Building/temple_1.cs" id="1_45drb"]
+[ext_resource type="Texture2D" uid="uid://ctufapuu6ajj3" path="res://Asset/Building/temple3.png" id="2_il4ny"]
+[ext_resource type="Texture2D" uid="uid://bolug6k1akwpv" path="res://Asset/UI/BuildingFunction/work.png" id="3_u0wby"]
+[ext_resource type="Texture2D" uid="uid://exrd4a7dfw47" path="res://Asset/UI/BuildingFunction/downgrade.png" id="4_hl4oa"]
+[ext_resource type="Texture2D" uid="uid://cviy3hj02baot" path="res://Asset/UI/BuildingFunction/upgrade.png" id="5_cup3r"]
+[ext_resource type="Texture2D" uid="uid://d25bdcorc5wi2" path="res://Asset/UI/BuildingFunction/unselect.png" id="6_igx7s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iat2a"]
+atlas = ExtResource("2_il4ny")
+region = Rect2(512, 0, 256, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bot8v"]
+atlas = ExtResource("2_il4ny")
+region = Rect2(0, 0, 256, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e0hy5"]
+atlas = ExtResource("2_il4ny")
+region = Rect2(256, 0, 256, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_orfav"]
+atlas = ExtResource("2_il4ny")
+region = Rect2(0, 0, 256, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mnmwj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iat2a")
+}],
+"loop": true,
+"name": &"High",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bot8v")
+}],
+"loop": true,
+"name": &"Low",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e0hy5")
+}],
+"loop": true,
+"name": &"Median",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_orfav")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ya2tp"]
+size = Vector2(256, 108)
+
+[node name="Temple3" type="Node2D"]
+position = Vector2(-2, -3)
+script = ExtResource("1_45drb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mnmwj")
+animation = &"Low"
+
+[node name="Buttons" type="Node2D" parent="."]
+position = Vector2(0, 15)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Buttons"]
+offset_left = -135.0
+offset_top = -152.0
+offset_right = 133.0
+offset_bottom = -88.0
+metadata/_edit_group_ = true
+
+[node name="WorkButton" type="TextureButton" parent="Buttons/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_u0wby")
+
+[node name="DowngradeButton" type="TextureButton" parent="Buttons/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("4_hl4oa")
+
+[node name="UpgradeButton" type="TextureButton" parent="Buttons/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("5_cup3r")
+
+[node name="UnselectButton" type="TextureButton" parent="Buttons/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("6_igx7s")
+
+[node name="Stuff" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1, 11)
+shape = SubResource("RectangleShape2D_ya2tp")

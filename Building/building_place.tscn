@@ -1,17 +1,38 @@
-[gd_scene load_steps=4 format=3 uid="uid://k04qywwexrrq"]
+[gd_scene load_steps=8 format=3 uid="uid://k04qywwexrrq"]
 
 [ext_resource type="Script" path="res://Building/building_place.cs" id="1_gpcxm"]
 [ext_resource type="PackedScene" uid="uid://gkh3xbp0wnal" path="res://Building/temple_0.tscn" id="3_h6kkw"]
+[ext_resource type="PackedScene" uid="uid://bbfi0w118q1pt" path="res://Building/temple_2.tscn" id="4_vl0qa"]
 [ext_resource type="PackedScene" uid="uid://dd7ypcby361fx" path="res://Building/temple_1.tscn" id="5_2bjx7"]
+[ext_resource type="PackedScene" uid="uid://hepi5eejw4sh" path="res://Building/temple_3.tscn" id="5_lqfyx"]
+[ext_resource type="Script" path="res://Building/temple_3.cs" id="6_fc6ui"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jeda3"]
+size = Vector2(64, 35)
 
 [node name="BuildingPlace" type="Node2D"]
-position = Vector2(89, 62)
+position = Vector2(1, -1)
 script = ExtResource("1_gpcxm")
 
 [node name="Building" type="Node2D" parent="."]
 
+[node name="Temple0" parent="Building" instance=ExtResource("3_h6kkw")]
+
 [node name="Temple1" parent="Building" instance=ExtResource("5_2bjx7")]
 visible = false
-position = Vector2(4.75, -7.75)
+position = Vector2(-1, -53)
 
-[node name="Temple0" parent="Building" instance=ExtResource("3_h6kkw")]
+[node name="Temple2" parent="Building" instance=ExtResource("4_vl0qa")]
+visible = false
+position = Vector2(-1, -63)
+
+[node name="Temple3" parent="Building" instance=ExtResource("5_lqfyx")]
+visible = false
+position = Vector2(-1, -65)
+script = ExtResource("6_fc6ui")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1, -2.5)
+shape = SubResource("RectangleShape2D_jeda3")

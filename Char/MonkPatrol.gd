@@ -4,8 +4,6 @@ class_name MonkPatrol
 @export var Monk: CharacterBody2D
 @export var move_speed:= 20
 
-
-
 var move_to_right: bool
 var wander_time: float
 var animationSprite
@@ -28,26 +26,11 @@ func enter():
 	random_wander()
 	animationSprite.play("walk")
 	
-	#random_wander()
-
-#func update(delta: float):
-	#print("XXXwander_time")
-	#if wander_time > 0:
-		#print("XXXwander_time")
-		#wander_time -= delta
-		#if move_to_right == true:
-			#get_node("../..").position.x += 1
-		#else:
-			#get_node("../..").position.x -= 1
-	#else:
-		#transitioned.emit(self, "monkidle")
 
 func physics_update(delta: float):
 	if wander_time > 0:
-		
 		wander_time -= delta
-		if move_to_right == true:
-			
+		if move_to_right == true:	
 			get_node("../..").position.x += 1
 		else:
 			get_node("../..").position.x -= 1
@@ -60,4 +43,6 @@ func exist():
 	
 func choose_target():
 	pass
+		
+		
 		

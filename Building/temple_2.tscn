@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://bbfi0w118q1pt"]
+
+[ext_resource type="Script" path="res://Building/temple_2.cs" id="1_2lqfa"]
+[ext_resource type="Texture2D" uid="uid://6rlf4o1mrpu2" path="res://Asset/Building/temple2.png" id="2_rv4jk"]
+[ext_resource type="Texture2D" uid="uid://bolug6k1akwpv" path="res://Asset/UI/BuildingFunction/work.png" id="3_jbexr"]
+[ext_resource type="Texture2D" uid="uid://exrd4a7dfw47" path="res://Asset/UI/BuildingFunction/downgrade.png" id="4_5wspn"]
+[ext_resource type="Texture2D" uid="uid://cviy3hj02baot" path="res://Asset/UI/BuildingFunction/upgrade.png" id="5_6e2te"]
+[ext_resource type="Texture2D" uid="uid://d25bdcorc5wi2" path="res://Asset/UI/BuildingFunction/unselect.png" id="6_4bijv"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v8x4p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_rv4jk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ya2tp"]
+size = Vector2(256, 108)
+
+[node name="Temple2" type="Node2D"]
+position = Vector2(-2, -3)
+script = ExtResource("1_2lqfa")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_v8x4p")
+frame_progress = 0.360581
+
+[node name="Buttons" type="Node2D" parent="."]
+position = Vector2(0, 15)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Buttons"]
+offset_left = -134.0
+offset_top = -132.0
+offset_right = 134.0
+offset_bottom = -68.0
+metadata/_edit_group_ = true
+
+[node name="WorkButton" type="TextureButton" parent="Buttons/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_jbexr")
+
+[node name="DowngradeButton" type="TextureButton" parent="Buttons/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("4_5wspn")
+
+[node name="UpgradeButton" type="TextureButton" parent="Buttons/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("5_6e2te")
+
+[node name="UnselectButton" type="TextureButton" parent="Buttons/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("6_4bijv")
+
+[node name="Stuff" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1, 11)
+shape = SubResource("RectangleShape2D_ya2tp")

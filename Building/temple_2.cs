@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Resources;
 
-public partial class temple_1 : Node2D
+public partial class temple_2 : Node2D
 {
 
 	public TextureButton downgradeButton;

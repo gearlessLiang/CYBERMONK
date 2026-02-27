@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccfk5b1i01smn"
-path="res://.godot/imported/temple2.png-0c1f3981db6f30d50b16157fbe9e4b4b.ctex"
+uid="uid://bbo5cgm0k1p3e"
+path="res://.godot/imported/za.png-8dcb372bcb275763e52915abde77b43e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Asset/ScaleExample/temple2.png"
-dest_files=["res://.godot/imported/temple2.png-0c1f3981db6f30d50b16157fbe9e4b4b.ctex"]
+source_file="res://Asset/za.png"
+dest_files=["res://.godot/imported/za.png-8dcb372bcb275763e52915abde77b43e.ctex"]
 
 [params]
 
